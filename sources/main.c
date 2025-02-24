@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:32:20 by yukravch          #+#    #+#             */
-/*   Updated: 2025/02/23 14:38:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:53:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-void	ft_free_2D_array(char **array, int word)
+void	*ft_free_2D_array(t_point **array, int word)
 {
 	int	i;
 
@@ -82,9 +82,8 @@ void	ft_free_2D_array(char **array, int word)
 	return (NULL);
 }
 
-t_map	ft_malloc_map(int fd, char* filename, int rows, int columns)
+t_map	*ft_malloc_map(int rows, int columns, t_map* map)
 {
-	t_map*	map;
 	int	number;
 
 	number = 0;
@@ -96,7 +95,7 @@ t_map	ft_malloc_map(int fd, char* filename, int rows, int columns)
 	map->height = rows;
 
 	//memory allocation for y - rows
-	map->matrix = (int**)malloc(sizeof(int*)*rows);
+	map->matrix = (t_point**)malloc(sizeof(t_point*)*rows);
 	if (!map->matrix)
 	{
 		free(map);
@@ -106,7 +105,7 @@ t_map	ft_malloc_map(int fd, char* filename, int rows, int columns)
 	//memory allocation for every x line - columns
 	while (number < rows)
 	{
-		map->matrix[number] = (int*)malloc(sizeof(int)*map->width);
+		map->matrix[number] = (t_point*)malloc(sizeof(t_point)*map->width);
 		if (!map->matrix[number])
 		{
 			ft_free_2D_array(map->matrix, number);
@@ -115,22 +114,16 @@ t_map	ft_malloc_map(int fd, char* filename, int rows, int columns)
 		}
 		number++;
 	}
+	return (map);
 }
 
-void	ft_check_if_rectangle(int fd, char* filename)
+t_map	*ft_check_if_rectangle(char* filename, t_map* map)
 {
+	int	fd;
         char*   line;
 	int	flc; //first line columns, count columns (how much numbers) of the first line
 	int	cc; //current count, count columns (how much numbers in the line)
-	char**	array;
 	int	rows = 1;
-/*
- *
- * array[y][x]:
- *
- * array[0][1]
- * array[0][2]...
- */
 	
 	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
@@ -140,7 +133,6 @@ void	ft_check_if_rectangle(int fd, char* filename)
 		exit(0);
 	}
 	flc = ft_count_line_numbers(line, ' ');
-	array = ft_split(line, ' ');
         while ((line = get_next_line(fd)) != NULL)
 	{
 		cc = ft_count_line_numbers(line, ' ');
@@ -149,13 +141,13 @@ void	ft_check_if_rectangle(int fd, char* filename)
 			ft_printf("Wrong map format. It should form a rectangle\n");
 			exit(0);
 		}
-		array = ft_split(line, ' ');
 		rows++;
-
 	}
-	ft_printf("Valid map format\n rows: %d\n", rows);
 	close(fd);
-	ft_malloc_map(fd, filename, rows, cc);
+	map = ft_malloc_map(rows, cc, map);
+	map->width = cc;
+	map->height = rows;
+	return (map);
 }
 
 void	check_errors(char *filename)
@@ -185,12 +177,74 @@ void	check_errors(char *filename)
 		exit(0);
 	}
 	else
-	{
 		close(fd);
-		ft_check_if_rectangle(fd, filename);
-	}
 }
 
+t_point**	ft_initialize_points(char* filename, t_map* map)
+{
+	//index to show coordinates of the point in **matrix(just a position in memory to acces the elements of the **matrix)
+	int	y;
+	int	x;
+	int	fd;
+	char**	array;
+	int	temp;
+	char	*line;
+
+	y = 0;
+	fd = open(filename, O_RDONLY);
+	ft_printf("map->height = %d\n", map->height);
+	while (y < map->height)
+	{
+		line = get_next_line(fd);
+		ft_printf("line number %d: %s\n", y, line);
+		array = ft_split(line, ' ');
+		ft_printf("line after split:\n");
+		temp = 0;
+		while (array[temp])
+		{
+			ft_printf("%s\n", array[temp]);
+			temp++;
+		}
+		ft_printf("map->width = %d\n", map->width);
+		x = 0;
+		ft_printf("before x loop: x: %d, y:%d\n", x, y);
+		while (x < map->width)
+		{
+			map->matrix[y][x].x = x;
+			map->matrix[y][x].y = y;
+			map->matrix[y][x].z = ft_atoi(array[x]);
+			map->matrix[y][x].color = 0xFF112233;
+			ft_printf("coordinates of the point: (%d, %d)\nheight of the point: %d\n", map->matrix[y][x].x, map->matrix[y][x].y, map->matrix[y][x].z);
+			x++;
+		}
+		y++;
+		ft_printf("for every iteration of loop - x: %d, y:%d\n", x, y);
+	}
+	return (map->matrix);
+}
+
+void	ft_fdf(char* filename)
+{
+	t_map*		map;
+	t_point**	matrix;
+	int y = 0;
+	int x;
+	map = NULL;
+	map = ft_check_if_rectangle(filename, map);
+	matrix = ft_initialize_points(filename, map);
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			t_point point = map->matrix[y][x];
+			ft_printf("Point at [y: %d, x: %d] -> (x: %d, y: %d, z: %d, color: %#08x)\n", y, x, point.x, point.y, point.z, point.color );
+			x++;
+		}
+		y++;
+	}
+
+}
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -201,6 +255,9 @@ int	main(int argc, char **argv)
 	else if (!check_if_fdf(argv[1]))
 		ft_printf("Wrong file format. The right format: filename.fdf\n");
 	else
+	{
 		check_errors(argv[1]);
+		ft_fdf(argv[1]);
+	}
 	return (0);
 }
