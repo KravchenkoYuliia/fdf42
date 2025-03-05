@@ -1,3 +1,4 @@
 fdf
 *.o
 objects
+*.swp
