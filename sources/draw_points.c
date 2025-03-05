@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_draw_points.c                                   :+:      :+:    :+:   */
+/*   draw_points.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/04 17:15:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:26:23 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_draw_points(t_map* map)
 	}
 	mlx->win_ptr = mlx_new_window(mlx->ptr, 1000, 1000, "FdF"); //create a new window
 	if (!mlx->win_ptr)
-	{
+	{	
 		perror("Error: Failed to create a new window\n");
 		free(mlx);
 		exit(EXIT_FAILURE);
@@ -81,12 +81,12 @@ void	ft_draw_points(t_map* map)
 		while (j < map->width)
 		{
 		 	ft_pixel_put(mlx, map->matrix[i][j].x_proj, map->matrix[i][j].y_proj, 0xFFFFFF);
-			 ft_printf("%d %d\n", map->matrix[i][j].x_proj, map->matrix[i][j].y_proj);
-			 j++;
+			j++;
 		}
 		i++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img,  0, 0);
+	ft_hooks(mlx);
 	mlx_loop(mlx->ptr);
 	free(mlx);
 }

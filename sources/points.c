@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/04 17:19:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:24:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 	char	*line;
 
 	y = 0;
-	ft_printf("map->height = %d\n", map->height);
 	while (y < map->height)
 	{
 		line = get_next_line(fd);
@@ -32,7 +31,6 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 			ft_free_map(map, map->height);
 			exit(EXIT_FAILURE);
 		}
-		//ft_printf("line number %d: %s\n", y, line);
 		array = ft_split(line, ' ');
 		free(line);
 		if (!array)
@@ -43,14 +41,12 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 			exit(EXIT_FAILURE);
 		}
 		x = 0;
-		//ft_printf("before x loop: x: %d, y:%d\n", x, y);
 		while (x < map->width)
 		{
 			map->matrix[y][x].x = x * zoom;
 			map->matrix[y][x].y = y * zoom;
 			map->matrix[y][x].z = ft_atoi(array[x]) * zoom;
 			map->matrix[y][x].color = 0xFF112233;
-			//ft_printf("coordinates of the point: (%d, %d)\nheight oaf the point: %d\n\n", map->matrix[y][x].x, map->matrix[y][x].y, map->matrix[y][x].z);
 			x++;
 		}
 		y++;
@@ -74,11 +70,8 @@ t_map*  ft_projection(t_map* map)
 			map->matrix[i][j].x_proj += WIN_WIDTH / 2;
 			map->matrix[i][j].y_proj = (int)((map->matrix[i][j].x + map->matrix[i][j].y) * sin(0.523599) -map->matrix[i][j].z);
 			map->matrix[i][j].y_proj += WIN_HEIGHT / 2;
-			ft_printf("x':%d y':%d\n", map->matrix[i][j].x_proj, map->matrix[i][j].y_proj);
 			j++;
 		}
-		ft_printf("\n");
-		ft_printf("new line n %d\n\n", i);
 		i++;
 	}
 	return (map);
