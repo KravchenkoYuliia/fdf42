@@ -1,4 +1,5 @@
 fdf
 *.o
 objects
-*.swp
+.*.swp
+libraries/*/.git
