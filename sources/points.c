@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/13 21:01:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:48:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,41 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 	return (map->matrix);
 }
 
+void	ft_put_image_to_center(t_map* map)
+{
+	//1step: get point of  start(x, y) and point of end(x, y) of the image
+	int		i;
+	int		j;
+	t_image_size*	ims;
+	
+	ims = (t_image_size*)malloc(sizeof(t_image_size));
+	if (!ims)
+		return (NULL);
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (map->matrix[i][j].x_proj < ims.x_min)
+				ims.x_min = map->matrix[i][j].x_proj;
+			if (map->matrix[i][j].y_proj < ims.y_min)
+				ims.y_min = map->matrix[i][j].y_proj;
+			if (map->matrix[i][j].x_proj > ims.x_max)
+				ims.x_min = map->matrix[i][j].x_proj;
+			if (map->matrix[i][j].y_proj > ims.y_max)
+				ims.y_max = map->matrix[i][j].y_proj;
+			j++;
+		}
+	i++;
+	}
+	ims.height = ims.y_max - ims.y_min;
+	ims.width = ims.x_max - ims.x_min;
+	
+	ims.offset_x = (WIN_WIDTH - ims.width ) / 2 - ims.x_min;
+	ims.offset_y = (WIN_HEIGHT - ims.height) / 2 - ims.y_min;
+}
+
 t_map*  ft_projection(t_map* map)
 {
 	int	i; //index for y
@@ -66,9 +101,21 @@ t_map*  ft_projection(t_map* map)
 		j = 0;
 		while (j < map->width)
 		{
-			map->matrix[i][j].x_proj = (int)((map->matrix[i][j].x - map->matrix[i][j].y) * cos(0.523599));
+			map->matrix[i][j].x_proj = ((map->matrix[i][j].x - map->matrix[i][j].y) * cos(0.523599));
 			map->matrix[i][j].x_proj += WIN_WIDTH / 2;
-			map->matrix[i][j].y_proj = (int)((map->matrix[i][j].x + map->matrix[i][j].y) * sin(0.523599) -map->matrix[i][j].z);
+			map->matrix[i][j].y_proj = ((map->matrix[i][j].x + map->matrix[i][j].y) * sin(0.523599) -map->matrix[i][j].z);
+			map->matrix[i][j].y_proj += WIN_HEIGHT / 2;
+			j++;
+		}
+		i++;
+	}
+	ft_put_image_to_center(map);
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			map->matrix[i][j].x_proj += ;
 			map->matrix[i][j].y_proj += WIN_HEIGHT / 2;
 			j++;
 		}
@@ -76,3 +123,5 @@ t_map*  ft_projection(t_map* map)
 	}
 	return (map);
 }
+
+

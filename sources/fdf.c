@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:54:51 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/13 20:22:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:29:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -45,13 +45,6 @@ void	ft_fdf(char* filename)
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
-	map = ft_projection(map);
-	if (!map)
-	{
-		perror("Error: Failed to do isometric projection");
-		ft_free_map(map, map->height);
-		exit(EXIT_FAILURE);
-	}
-	//ft_draw_lines(map);
+	ft_projection(map);
 	ft_start_drawing(map);
 }

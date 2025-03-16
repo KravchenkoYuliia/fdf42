@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/13 20:45:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:39:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ void	ft_start_drawing(t_map* map)
 		free(mlx);
 		exit(EXIT_FAILURE);
 	}
-	mlx->win_ptr = mlx_new_window(mlx->ptr, 1920, 1080, "FdF"); //create a new window
+	mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT, "FdF"); //create a new window
 	if (!mlx->win_ptr)
 	{	
 		perror("Error: Failed to create a new window\n");
 		free(mlx);
 		exit(EXIT_FAILURE);
 	}
-	mlx->img = mlx_new_image(mlx->ptr, 1920, 1080); //create a new image on the window
+	mlx->img = mlx_new_image(mlx->ptr, IMG_WIDTH, IMG_HEIGHT); //create a new image on the window
 	if (!mlx->img)
 	{
 		perror("Error: Failed to create a new image on the window\n");
@@ -106,7 +106,7 @@ void	ft_start_drawing(t_map* map)
 		free(mlx);
 		exit(EXIT_FAILURE);
 	}
-	if (!(map->matrix[i][j].x_proj >= 0 && map->matrix[i][j].x_proj <= 1920 && map->matrix[i][j].y_proj >= 0 && map->matrix[i][j].y_proj <= 1080))
+	if (!(map->matrix[i][j].x_proj >= 0 && map->matrix[i][j].x_proj <= WIN_WIDTH && map->matrix[i][j].y_proj >= 0 && map->matrix[i][j].y_proj <= WIN_HEIGHT))
 	{
 		perror("Error: Invalid map size");
 		free(mlx);
@@ -119,7 +119,7 @@ void	ft_start_drawing(t_map* map)
 		exit(EXIT_FAILURE);
 	}
 	ft_get_points_to_draw_a_line(mlx, map);
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img,  0, 0);
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, map->matrix[0][0].x_proj, map->matrix[0][0].y_proj);
 	ft_hooks(mlx, map);
 	mlx_loop(mlx->ptr);
 	free(mlx);

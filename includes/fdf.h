@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/05 12:03:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:43:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 #include <fcntl.h>
 #include <math.h>
 #include <stdlib.h>
+#include <floats.h>
 
 #define	zoom 20
-#define	WIN_WIDTH 800
-#define	WIN_HEIGHT 800
+#define	WIN_WIDTH 1920
+#define	WIN_HEIGHT 1080
 
 //struct for every point of map
 typedef struct s_point{
@@ -34,7 +35,6 @@ typedef struct s_point{
 	int	color;
 	double	x_proj;
 	double	y_proj;//points after transformation 3D(x, y, z) to 2D(x', y')
-
 } t_point;
 
 typedef	struct	s_map{
@@ -44,6 +44,17 @@ typedef	struct	s_map{
 	int	height; //number of lines (y-rows)
 	t_point**	matrix; //2D-array struct for stocking z-values (height and color of each x,y point)
 } t_map;
+
+typedef struct	s_image_size{
+	double  x_min = DBL_MAX;
+	double  y_min = DBL_MAX;
+	double  x_max = DBL_MIN;
+	double  y_max = DBL_MIN;
+	double	height;
+	double	width;
+	double	offset_x;
+	double	offset_y;	
+}
 
 typedef struct s_mlx{
 	void*	ptr;
@@ -65,8 +76,8 @@ void		ft_free_map(t_map* map, int allocated_rows);
 t_point**	ft_initialize_points(int fd, t_map* map);
 t_map*		ft_projection(t_map* map);
 void		ft_pixel_put(t_mlx* mlx, int x, int y, int color);
-void		ft_draw_points(t_map* map);
-void		ft_hooks(t_mlx* mlx);
+void		ft_start_drawing(t_map* map);
+void		ft_hooks(t_mlx* mlx, t_map* map);
 int		ft_key_press(int keycode, t_mlx* mlx);
 
 #endif
