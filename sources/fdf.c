@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:54:51 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/16 15:29:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/17 09:46:23 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -46,5 +46,5 @@ void	ft_fdf(char* filename)
 	}
 	close(fd);
 	ft_projection(map);
-	ft_start_drawing(map);
+//	ft_start_drawing(map);
 }
