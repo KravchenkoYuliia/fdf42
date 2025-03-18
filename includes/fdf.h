@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/17 17:47:28 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:48:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <stdlib.h>
 #include <float.h>
 
-#define	WIN_WIDTH 1920
-#define	WIN_HEIGHT 1080
+#define	WIN_WIDTH 1820
+#define	WIN_HEIGHT 880
 
 //struct for every point of map
 typedef struct s_point{
@@ -75,7 +75,7 @@ void		ft_free_map(t_map* map, int allocated_rows);
 t_point**	ft_initialize_points(int fd, t_map* map);
 void		ft_projection(t_map* map);
 void		ft_pixel_put(t_mlx* mlx, int x, int y, int color);
-void		ft_start_drawing(t_map* map, t_image_size* ims);
+void		ft_start_drawing(t_map* map);
 void		ft_hooks(t_mlx* mlx, t_map* map);
 int		ft_key_press(int keycode, t_mlx* mlx);
 

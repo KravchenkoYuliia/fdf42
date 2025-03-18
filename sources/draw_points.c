@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/17 18:48:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:47:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_get_points_to_draw_a_line(t_mlx* mlx, t_map* map)
 	}
 }
 
-void	ft_start_drawing(t_map* map, t_image_size* ims)
+void	ft_start_drawing(t_map* map)
 {
 	t_mlx*	mlx;
 	//int	i = 0; //index for y
@@ -96,7 +96,7 @@ void	ft_start_drawing(t_map* map, t_image_size* ims)
 		free(mlx);
 		exit(EXIT_FAILURE);
 	}
-	mlx->img = mlx_new_image(mlx->ptr, ims->width, ims->height); //create a new image on the window
+	mlx->img = mlx_new_image(mlx->ptr, WIN_WIDTH, WIN_HEIGHT); //create a new image on the window
 	if (!mlx->img)
 	{
 		perror("Error: Failed to create a new image on the window\n");
@@ -119,7 +119,7 @@ void	ft_start_drawing(t_map* map, t_image_size* ims)
 		exit(EXIT_FAILURE);
 	}
 	ft_get_points_to_draw_a_line(mlx, map);
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, ims->x_min, ims->y_min);
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0,0);
 	ft_hooks(mlx, map);
 	mlx_loop(mlx->ptr);
 	free(mlx);
