@@ -21,7 +21,11 @@ int	ft_exit(t_mlx* mlx)
 		mlx_destroy_window(mlx->ptr, mlx->win_ptr);
 	}
 	if (mlx->ptr)
+	{
 		mlx_destroy_display(mlx->ptr);
+		free(mlx->ptr);
+	}
+	free(mlx);
 	exit(0);
 	return (0);
 }
