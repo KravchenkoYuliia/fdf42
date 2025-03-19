@@ -47,11 +47,11 @@ int	ft_key_press(int keycode, t_hook* param)
 	edit = 0;
 	
 	if (keycode == 'i') {
-		param->map->zoom *= 1.5;
+		param->map->zoom *= 1.1;
 		edit = 1;
 	}
 	else if (keycode == 'o') {
-		param->map->zoom /= 1.5;
+		param->map->zoom /= 1.2;
 		edit = 1;
 	}
 	else if (keycode == 65361) {

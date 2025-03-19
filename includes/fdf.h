@@ -72,6 +72,7 @@ typedef struct s_hook {
 	t_map* map;
 } t_hook;
 
+double  ft_get_scale(t_map* map);
 int	ft_exit(t_mlx* mlx, t_map* map, t_hook* hook);
 int			check_if_fdf(char* filename);
 void		ft_fdf(char* filename);

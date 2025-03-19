@@ -75,6 +75,38 @@ void	ft_get_points_to_draw_a_line(t_mlx* mlx, t_map* map)
 
 void generate_image(t_mlx* mlx, t_map* map)
 {
+	int             i; //index for y
+	int             j; //index for x
+	double          scale;
+	double  map_center_x;
+	double  map_center_y;
+	double  offset_x;
+	double  offset_y;
+	
+	scale = ft_get_scale(map);
+	map_center_x = map->width / 2;
+	map_center_y = map->height / 2;
+	offset_x = (WIN_WIDTH / 2) - map_center_x;
+	offset_y = (WIN_HEIGHT - map_center_y) / 2;
+	i = 0;
+	while (i < map->height)
+	{
+			j = 0;
+			if (!map || !map->matrix || !map->matrix[i])
+			{
+					perror("Error: !map->matrix in  ft_projection\n");
+			}
+			while (j < map->width)
+			{
+					map->matrix[i][j].x_proj = (((map->matrix[i][j].x * map->zoom) - (map->matrix[i][j].y * map->zoom)) * cos(0.523599));
+					map->matrix[i][j].x_proj += offset_x;
+					map->matrix[i][j].y_proj = (((map->matrix[i][j].x * map->zoom) + (map->matrix[i][j].y * map->zoom)) * sin(0.523599) - map->matrix[i][j].z);
+					map->matrix[i][j].y_proj += offset_y;
+					j++;
+			}
+			i++;
+	}
+	
 	if (mlx->img != NULL)
 		mlx_destroy_image(mlx->ptr, mlx->img);
 
@@ -102,36 +134,4 @@ void generate_image(t_mlx* mlx, t_map* map)
 	}
 	ft_get_points_to_draw_a_line(mlx, map);
 }
-	
 
-void	ft_start_drawing(t_map* map)
-{
-	t_mlx*	mlx;
-	//int	i = 0; //index for y
-	//int	j = 0; //index for x
-
-	mlx = (t_mlx*)malloc(sizeof(t_mlx));
-	if (!mlx)
-		return ;
-	mlx->img = NULL;
-	mlx->ptr = mlx_init();
-	if (!mlx->ptr)
-	{
-		perror("Error: Failed to initialize mlx->ptr");
-		free(mlx);
-		exit(EXIT_FAILURE);
-	}
-	mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT, "FdF"); //create a new window
-	if (!mlx->win_ptr)
-	{	
-		perror("Error: Failed to create a new window\n");
-		free(mlx);
-		exit(EXIT_FAILURE);
-	}
-	generate_image(mlx, map);
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0, 0);
-	t_hook* hook = ft_hooks(mlx, map);
-	mlx_loop(mlx->ptr);
-	ft_exit(mlx, map, hook);
-
-}
