@@ -35,8 +35,8 @@ void	ft_draw_lines(t_mlx* mlx, double x1, double y1, double x2, double y2) //fir
 	double	pixels;
 	double	d_x; //distance on x axis between start and end points
 	double	d_y; //distance on y axis between start ans end points
-	double	start_x = x1;
-	double	start_y = y1;
+	double	start_x = x1 - (WIN_WIDTH / 4);
+	double	start_y = y1 - (WIN_HEIGHT / 4);
 
 	d_x = x2 - x1;
 	d_y = y2 - y1;
@@ -119,9 +119,9 @@ void	ft_start_drawing(t_map* map)
 		exit(EXIT_FAILURE);
 	}
 	ft_get_points_to_draw_a_line(mlx, map);
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0,0);
-	ft_hooks(mlx, map);
-	ft_free_map(map, map->height);
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0, 0);
+	t_hook* hook = ft_hooks(mlx, map);
 	mlx_loop(mlx->ptr);
-	free(mlx);
+	ft_exit(mlx, map, hook);
+
 }

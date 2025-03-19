@@ -41,10 +41,7 @@ void	ft_fdf(char* filename)
 	{
 		perror("Error: Failed to initialize points\n");
 		ft_free_map(map, map->height);
-		close(fd);
 		exit(EXIT_FAILURE);
 	}
-	close(fd);
 	ft_projection(map);
-//	ft_start_drawing(map);
 }

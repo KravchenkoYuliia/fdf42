@@ -41,7 +41,8 @@ typedef	struct	s_map{
 	int	x;
 	int	width; //numbers in line (x-columns)
 	int	height; //number of lines (y-rows)
-	t_point**	matrix; //2D-array struct for stocking z-values (height and color of each x,y point)
+	t_point**	matrix;
+	double	move; //2D-array struct for stocking z-values (height and color of each x,y point)
 } t_map;
 
 typedef struct	s_image_size{
@@ -62,12 +63,19 @@ typedef struct s_mlx{
 	int	bits_per_pixel;
 	int	size_line;
 	int	endian;
-	char*	bits_buff;	
+	char*	bits_buff;
 } t_mlx;
 
-int		ft_check_if_fdf(char* filename);
+
+typedef struct s_hook {
+	t_mlx* mlx;
+	t_map* map;
+} t_hook;
+
+int	ft_exit(t_mlx* mlx, t_map* map, t_hook* hook);
+int			check_if_fdf(char* filename);
 void		ft_fdf(char* filename);
-int		ft_count_line_numbers(char* str, char c);
+int			ft_count_line_numbers(char* str, char c);
 t_map*		ft_check_if_rectangle(int fd, t_map* map);
 t_map*		ft_malloc_map(int rows, int columns, t_map* map);
 void*		ft_free_2D_array(char** array);
@@ -76,7 +84,7 @@ t_point**	ft_initialize_points(int fd, t_map* map);
 void		ft_projection(t_map* map);
 void		ft_pixel_put(t_mlx* mlx, int x, int y, int color);
 void		ft_start_drawing(t_map* map);
-void		ft_hooks(t_mlx* mlx, t_map* map);
-int		ft_key_press(int keycode, t_mlx* mlx);
+t_hook*		ft_hooks(t_mlx* mlx, t_map* map);
+int			ft_key_press(int keycode, t_hook* param);
 
 #endif

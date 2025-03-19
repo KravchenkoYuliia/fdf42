@@ -12,7 +12,8 @@
 
 #include "fdf.h"
 
-int	ft_exit(t_mlx* mlx)
+
+int	ft_exit(t_mlx* mlx, t_map* map, t_hook* hook)
 {
 	if (mlx->ptr && mlx->img)
 		mlx_destroy_image(mlx->ptr, mlx->img);
@@ -25,12 +26,13 @@ int	ft_exit(t_mlx* mlx)
 		mlx_destroy_display(mlx->ptr);
 		free(mlx->ptr);
 	}
+	ft_free_map(map, map->height);
 	free(mlx);
-	exit(0);
-	return (0);
+	free(hook);
+	return 0;
 }
 
-int	ft_key_press(int keycode, t_mlx* mlx)
+int	ft_key_press(int keycode, t_hook* param)
 {
 	/*ft_printf("%d", keycode);
 	 * 65307 = esc
@@ -42,14 +44,13 @@ int	ft_key_press(int keycode, t_mlx* mlx)
 
 	if (keycode == 65307)
 	{
-		ft_exit(mlx);
+		mlx_loop_end(param->mlx->ptr);
 	}
 	return (0);
 }
 
 int	ft_mouse_hook(int button)
 {
-//	ft_printf("%d", button);
 	if (button == 1)
 		ft_printf("You pressed left button on the mouse\n");
 	else if (button == 2)
@@ -63,11 +64,15 @@ int	ft_mouse_hook(int button)
 	return (0);
 }
 
-void	ft_hooks(t_mlx* mlx, t_map* map)
+t_hook*	ft_hooks(t_mlx* mlx, t_map* map)
 {
-	(void)map;
-	mlx_hook(mlx->win_ptr, 2, 1L<<0, ft_key_press, mlx); //2=KeyPress 1L<<0=KeyPressMask
-	mlx_hook(mlx->win_ptr, 17, 1L<<0, ft_exit, mlx); //17='x'
-	//mlx_expose_hook(mlx->win_ptr, ft_hz, (t_mlx*)mlx);
-	mlx_mouse_hook(mlx->win_ptr, ft_mouse_hook, mlx);
+	t_hook* hook = malloc(sizeof(t_hook));
+
+	hook->mlx = mlx;
+	hook->map = map;
+
+	mlx_hook(mlx->win_ptr, 2, 1L<<0, &ft_key_press, hook);
+	mlx_hook(mlx->win_ptr, 17, 1L<<0, &mlx_loop_end, mlx->ptr);
+	mlx_mouse_hook(mlx->win_ptr, &ft_mouse_hook, mlx);
+	return hook;
 }

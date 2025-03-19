@@ -34,6 +34,7 @@ void	free_last_file_content(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 }
 
 t_point**	ft_initialize_points(int fd, t_map* map)
@@ -104,7 +105,7 @@ void    ft_projection(t_map* map)
         map_center_x = map->width / 2;
         map_center_y = map->height / 2;
         offset_x = (WIN_WIDTH / 2) - map_center_x;
-        offset_y = (WIN_HEIGHT - map_center_y * scale) / 2;
+        offset_y = (WIN_HEIGHT - map_center_y) / 2;
         i = 0;
         while (i < map->height)
         {
