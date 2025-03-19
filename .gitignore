@@ -3,3 +3,7 @@ fdf
 objects
 .*.swp
 libraries/*/.git
+libraries/libft_full_library/libft.a
+libraries/minilibx-linux/libmlx.a
+libraries/minilibx-linux/libmlx_Linux.a
+libraries/minilibx-linux/test/mlx-test
