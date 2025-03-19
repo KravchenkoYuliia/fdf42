@@ -20,10 +20,20 @@ double  ft_get_scale(t_map* map)
         double  scale_y;
         double  scale;
 
-        scale_x = (WIN_WIDTH /2) / map->width;
-        scale_y = (WIN_HEIGHT /2) / map->height;
+        scale_x = (WIN_WIDTH / 2) /  map->width;
+        scale_y = (WIN_HEIGHT / 2) / map->height;
         scale = fmin(scale_x, scale_y);
         return (scale);
+}
+
+void	free_last_file_content(int fd)
+{
+	char* line;
+	line = get_next_line(fd);
+	while (line != NULL) {
+		free(line);
+		line = get_next_line(fd);
+	}
 }
 
 t_point**	ft_initialize_points(int fd, t_map* map)
@@ -77,6 +87,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 		y++;
 		ft_free_2D_array(array);
 	}
+	free_last_file_content(fd);
 	return (map->matrix);
 }
 void    ft_projection(t_map* map)

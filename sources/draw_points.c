@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/18 15:47:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:41:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	ft_start_drawing(t_map* map)
 	ft_get_points_to_draw_a_line(mlx, map);
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0,0);
 	ft_hooks(mlx, map);
+	ft_free_map(map, map->height);
 	mlx_loop(mlx->ptr);
 	free(mlx);
 }
