@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/18 15:45:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:08:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 		{
 			map->matrix[y][x].x = x * scale;
 			map->matrix[y][x].y = y * scale;
-			map->matrix[y][x].z = ft_atoi(array[x]) * 4;
+			map->matrix[y][x].z = ft_atoi(array[x]) * 6;
 			map->matrix[y][x].color = 0xFF112233;
 			x++;
 		}
@@ -101,7 +101,7 @@ void    ft_projection(t_map* map)
         double  offset_x;
         double  offset_y;
 
-        scale = ft_get_scale(map);
+        scale = ft_get_scale(map) * map->zoom;
         map_center_x = map->width / 2;
         map_center_y = map->height / 2;
         offset_x = (WIN_WIDTH / 2) - map_center_x;

@@ -138,6 +138,9 @@ t_map   *ft_check_if_rectangle(int fd, t_map* map)
                 perror("Error: Failed to allocate memory for map\n");
                 exit(EXIT_FAILURE);
         }
+		map->translate_x = 0;
+		map->translate_y = 0;
+		map->zoom = 1;
         map->width = cc;
         map->height = rows;
         return (map);

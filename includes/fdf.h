@@ -37,12 +37,12 @@ typedef struct s_point{
 } t_point;
 
 typedef	struct	s_map{
-	int	y;
-	int	x;
+	int translate_x;
+	int translate_y;
+	double zoom;
 	int	width; //numbers in line (x-columns)
 	int	height; //number of lines (y-rows)
 	t_point**	matrix;
-	double	move; //2D-array struct for stocking z-values (height and color of each x,y point)
 } t_map;
 
 typedef struct	s_image_size{
@@ -86,5 +86,6 @@ void		ft_pixel_put(t_mlx* mlx, int x, int y, int color);
 void		ft_start_drawing(t_map* map);
 t_hook*		ft_hooks(t_mlx* mlx, t_map* map);
 int			ft_key_press(int keycode, t_hook* param);
+void generate_image(t_mlx* mlx, t_map* map);
 
 #endif

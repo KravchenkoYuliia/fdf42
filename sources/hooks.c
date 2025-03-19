@@ -41,6 +41,41 @@ int	ft_key_press(int keycode, t_hook* param)
 	 * 65363 = >
 	 * 65361 = <
 	 */
+	char edit;
+
+	printf("keycode:%d\n", keycode);
+	edit = 0;
+	
+	if (keycode == 'i') {
+		param->map->zoom *= 1.5;
+		edit = 1;
+	}
+	else if (keycode == 'o') {
+		param->map->zoom /= 1.5;
+		edit = 1;
+	}
+	else if (keycode == 65361) {
+		param->map->translate_x -= 10;
+		edit = 1;
+	}
+	else if (keycode == 65363) {
+		param->map->translate_x += 10;
+		edit = 1;
+	}
+	else if (keycode == 65362) {
+		param->map->translate_y -= 10;
+		edit = 1;
+	}
+	else if (keycode == 65364) {
+		param->map->translate_y += 10;
+		edit = 1;
+	}
+
+	if (edit == 1) {
+		generate_image(param->mlx, param->map);
+		mlx_put_image_to_window(param->mlx->ptr, param->mlx->win_ptr, param->mlx->img, 0, 0);
+		printf("translating\n");
+	}
 
 	if (keycode == 65307)
 	{
