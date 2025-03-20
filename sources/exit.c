@@ -3,13 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:51:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/05 10:54:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:19:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_correct_exit();
+void    ft_exit_fd(int fd, char *line)
+{
+    if (!line)
+        perror("Error: Empty or damaged file\n");
+    if (line)
+	    free(line);
+    if (fd)
+        close(fd);
+    exit(EXIT_FAILURE);
+}

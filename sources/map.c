@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:20:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/04 17:23:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:26:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_count_line_numbers(char *str, char c)
+int ft_count_line_numbers(char *str, char c)
 {
-	int	count;
-	int	i;
+	int count;
+	int i;
 
 	i = 0;
 	count = 0;
@@ -30,13 +30,13 @@ int	ft_count_line_numbers(char *str, char c)
 	return (count);
 }
 
-void	ft_free_map(t_map* map, int allocated_rows)
+void ft_free_map(t_map *map, int allocated_rows)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!map)
-		return ;
+		return;
 	if (map->matrix)
 	{
 		while (i < allocated_rows)
@@ -50,10 +50,10 @@ void	ft_free_map(t_map* map, int allocated_rows)
 	free(map);
 }
 
-void    *ft_free_2D_array(char** array)
+void *ft_free_2d_array(char **array)
 {
-	int	i;
-	int	word;
+	int i;
+	int word;
 
 	i = 0;
 	word = 0;
@@ -66,32 +66,27 @@ void    *ft_free_2D_array(char** array)
 	}
 	free(array);
 	return (NULL);
-	}
+}
 
-t_map	*ft_malloc_map(int rows, int columns, t_map* map)
+t_map *ft_malloc_map(int rows, int columns, t_map *map)
 {
-	int	number;
+	int number;
 
 	number = 0;
-	//dynamic memory allocation for structure
-	map = (t_map*)malloc(sizeof(t_map));
+	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	map->width = columns;
 	map->height = rows;
-
-	//memory allocation for y - rows
-	map->matrix = (t_point**)malloc(sizeof(t_point*)*rows);
+	map->matrix = (t_point **)malloc(sizeof(t_point *) * rows);
 	if (!map->matrix)
 	{
 		free(map);
 		return (NULL);
 	}
-
-	//memory allocation for every x line - columns
 	while (number < rows)
 	{
-		map->matrix[number] = (t_point*)malloc(sizeof(t_point)*map->width);
+		map->matrix[number] = (t_point *)malloc(sizeof(t_point) * map->width);
 		if (!map->matrix[number])
 		{
 			ft_free_map(map, number);
@@ -102,46 +97,49 @@ t_map	*ft_malloc_map(int rows, int columns, t_map* map)
 	return (map);
 }
 
-t_map   *ft_check_if_rectangle(int fd, t_map* map)
+t_map	*ft_initialize_map(int fd, t_map *map)
 {
-        char*   line;
-        int     flc; //first line columns, count columns (how much numbers) of the first line
-        int     cc; //current count, count columns (how much numbers in the line)
-        int     rows = 1;
+	t_fd *text;
 
-        line = get_next_line(fd);
-        if (!line)
-        {
-                perror("Error: Empty or damaged file\n");
-                close(fd);
-                exit(EXIT_FAILURE);
-        }
-        flc = ft_count_line_numbers(line, ' ');
-        free(line);
-        while ((line = get_next_line(fd)) != NULL)
-        {
-                cc = ft_count_line_numbers(line, ' ');
-                if (flc != cc)
-                {
-                        ft_printf("Wrong map format. It should form a rectangle\n");
-                        free(line);
-                        close(fd);
-                        exit(EXIT_FAILURE);
-                }
-                rows++;
-                free(line);
-        }
-        close(fd);
-        map = ft_malloc_map(rows, cc, map);
-        if (!map)
-        {
-                perror("Error: Failed to allocate memory for map\n");
-                exit(EXIT_FAILURE);
-        }
-		map->translate_x = 0;
-		map->translate_y = 0;
-		map->zoom = 1;
-        map->width = cc;
-        map->height = rows;
-        return (map);
+	text = (t_fd *)malloc(sizeof(t_fd));
+
+	ft_check_if_rectangle(fd, text);
+	map = ft_malloc_map(text->rows, text->cc, map);
+	if (!map)
+	{
+		perror("Map is not allocated in ft_initialize_map\n");
+		exit(EXIT_FAILURE);
+	}
+	map->width = text->cc;
+	map->height = text->rows;
+	free(text);
+	map->translate_x = 0;
+	map->translate_y = 0;
+	map->zoom = 1;
+	return (map);
+}
+
+void	ft_check_if_rectangle(int fd, t_fd *text)
+{
+	text->rows = 1;
+	text->line = get_next_line(fd);
+	if (!text->line)
+		ft_exit_fd(fd, text->line);
+	text->flc = ft_count_line_numbers(text->line, ' ');
+	free(text->line);
+	while (1)
+	{
+		text->line = get_next_line(fd);
+		if (text->line == NULL)
+			break;
+		text->cc = ft_count_line_numbers(text->line, ' ');
+		if (text->flc != text->cc)
+		{
+			ft_printf("Wrong map format. It should form a rectangle\n");
+			ft_exit_fd(fd, text->line);
+		}
+		text->rows++;
+		free(text->line);
+	}
+	close(fd);
 }

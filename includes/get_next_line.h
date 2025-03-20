@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:59:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/02/14 13:22:02 by yukravch         ###   ########.fr       */
+/*   Created: 2025/03/20 11:26:08 by yukravch          #+#    #+#             */
+/*   Updated: 2025/03/20 11:28:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # ifndef  BUFFER_SIZE
 #  define BUFFER_SIZE 10

@@ -86,7 +86,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 			x++;
 		}
 		y++;
-		ft_free_2D_array(array);
+		ft_free_2d_array(array);
 	}
 	free_last_file_content(fd);
 	return (map->matrix);
