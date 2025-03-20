@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/19 18:08:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:48:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	free_last_file_content(int fd)
 
 t_point**	ft_initialize_points(int fd, t_map* map)
 {
-	//index to show coordinates of the point in **matrix(just a position in memory to acces the elements of the **matrix)
 	int	y;
 	int	x;
 	char**	array;
@@ -57,12 +56,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 	{
 		line = get_next_line(fd);
 		if (!line)
-		{
-			perror("Error: line is NULL in ft_inintialize_points\n");
-			close(fd);
-			ft_free_map(map, map->height);
-			exit(EXIT_FAILURE);
-		}
+			ft_exit_fd(fd, line, map);
 		array = ft_split(line, ' ');
 		free(line);
 		if (!array)
@@ -91,6 +85,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 	free_last_file_content(fd);
 	return (map->matrix);
 }
+
 void    ft_projection(t_map* map)
 {		
 		t_mlx*	mlx;

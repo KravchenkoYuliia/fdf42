@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 13:25:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:46:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_free_map(t_map *map, int allocated_rows);
 void	ft_projection(t_map *map);
 void	ft_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	ft_start_drawing(t_map *map);
-void	ft_exit_fd(int fd, char *line);
+void	ft_exit_fd(int fd, char *line, t_map *map);
 void	generate_image(t_mlx *mlx, t_map *map);
 double	ft_get_scale(t_map *map);
 

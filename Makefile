@@ -5,7 +5,7 @@ all: $(NAME)
 
 SRC_DIR = sources
 OBJ_DIR = objects
-FILES = main.c draw_points.c fdf.c points.c map.c hooks.c exit.c
+FILES = main.c draw_points.c fdf.c points.c map.c hooks.c exit.c utils.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 INC = includes
 
