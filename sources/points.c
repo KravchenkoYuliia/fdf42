@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 14:10:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:01:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ double  ft_get_scale(t_map* map)
         return (scale);
 }
 
-t_point**	ft_initialize_points(int fd, t_map* map)
+void	ft_initialize_points(int fd, t_map* map)
 {
 	int	y;
 	int	x;
@@ -70,7 +70,6 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 		ft_free_2d_array(array);
 	}
 	free_last_file_content(fd);
-	return (map->matrix);
 }
 
 void    ft_initialize_mlx(t_map* map)
@@ -93,7 +92,7 @@ void    ft_initialize_mlx(t_map* map)
 			perror("Error: Failed to create a new window\n");
 			ft_exit_mlx(mlx);
 		}
-		generate_image(mlx, map);
+		ft_generate_image(mlx, map);
 		mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0, 0);
 		t_hook* hook = ft_hooks(mlx, map);
 		mlx_loop(mlx->ptr);

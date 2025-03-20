@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 14:17:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:42:33 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ typedef struct s_map{
 	int		width;
 	int		height;
 	double	zoom;
+	double	scale;
+	double	offset_x;
+	double	offset_y;
 	t_point	**matrix;
 }	t_map;
 
@@ -61,6 +64,7 @@ typedef struct s_mlx{
 	void	*img;
 	char	*bits_buff;
 }	t_mlx;
+
 
 typedef struct s_hook {
 	t_mlx	*mlx;
@@ -75,7 +79,7 @@ void	ft_check_if_rectangle(int fd, t_fd *text);
 t_map   *ft_initialize_map(int fd, t_map *map);
 t_map	*ft_malloc_map(int rows, int columns, t_map *map);
 t_hook	*ft_hooks(t_mlx *mlx, t_map *map);
-t_point	**ft_initialize_points(int fd, t_map *map);
+void	ft_initialize_points(int fd, t_map *map);
 void    ft_initialize_mlx(t_map* map);
 void	ft_fdf(char *filename);
 void	*ft_free_2d_array(char **array);
@@ -85,7 +89,8 @@ void	ft_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	ft_start_drawing(t_map *map);
 void	ft_exit_fd(int fd, char *line, t_map *map);
 void	ft_exit_mlx(t_mlx *mlx);
-void	generate_image(t_mlx *mlx, t_map *map);
+void	ft_exit_perror(char *msg);
+void	ft_generate_image(t_mlx *mlx, t_map *map);
 void	free_last_file_content(int fd);
 double	ft_get_scale(t_map *map);
 

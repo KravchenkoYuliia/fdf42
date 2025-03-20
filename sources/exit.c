@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:51:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 14:08:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:56:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ int	ft_exit_final(t_mlx* mlx, t_map* map, t_hook* hook)
 	free(hook);
 	return 0;
 }
+
+void	ft_exit_perror(char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
+
 void	ft_exit_mlx(t_mlx *mlx)
 {
 	free(mlx);

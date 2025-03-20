@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:50:53 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 14:52:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:01:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,54 +28,45 @@ t_map	*ft_initialize_map(int fd, t_map *map)
 	map->translate_x = 0;
 	map->translate_y = 0;
 	map->zoom = 1;
+    map->scale = ft_get_scale(map);
 	return (map);
 }
-
-t_point**	ft_initialize_points(int fd, t_map* map)
+void    ft_put_points_to_struct(char **array, int y)
 {
-	int	y;
-	int	x;
-	char**	array;
-	char	*line;
-	double	scale;
+    int x;   
 
-	scale = ft_get_scale(map);
-	if (!map || !map->matrix)
-	{
-		perror("Error: map or matrix is NULL in ft_initialize_points");
-		exit(EXIT_FAILURE);
-	}
+    x = 0;
+    while (x < map->width)
+    {
+        map->matrix[y][x].x = x * map->scale;
+        map->matrix[y][x].y = y * map->scale;
+        map->matrix[y][x].z = ft_atoi(array[x]) * 6;
+        x++;
+    }
+    
+}
+void	ft_initialize_points(int fd, t_map* map)
+{
+	char**	array;
+
 	y = 0;
 	while (y < map->height)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			ft_exit_fd(fd, line, map);
-		array = ft_split(line, ' ');
-		free(line);
+		text->line = get_next_line(fd);
+		if (!text->line)
+			ft_exit_fd(fd, text->line, map);
+		array = ft_split(text->line, ' ');
+		free(text->line);
 		if (!array)
 		{
 			perror("Error: Failed to split line\n");
-			ft_exit_fd(fd, line, map);
+			ft_exit_fd(fd, text->line, map);
 		}
-		if (!map->matrix[y])
-		{
-			perror("Error: map->matrix[y] is NULL in ft_initialize_points\n");
-		}
-		x = 0;
-		while (x < map->width)
-		{
-			map->matrix[y][x].x = x * scale;
-			map->matrix[y][x].y = y * scale;
-			map->matrix[y][x].z = ft_atoi(array[x]) * 6;
-			map->matrix[y][x].color = 0xFF112233;
-			x++;
-		}
+        ft_put_points_to_struct(array, y);
 		y++;
 		ft_free_2d_array(array);
 	}
 	free_last_file_content(fd);
-	return (map->matrix);
 }
 void    ft_initialize_mlx(t_map* map)
 {		
@@ -97,7 +88,7 @@ void    ft_initialize_mlx(t_map* map)
 			perror("Error: Failed to create a new window\n");
 			ft_exit_mlx(mlx);
 		}
-		generate_image(mlx, map);
+		ft_generate_image(mlx, map);
 		mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0, 0);
 		t_hook* hook = ft_hooks(mlx, map);
 		mlx_loop(mlx->ptr);
