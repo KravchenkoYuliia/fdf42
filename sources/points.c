@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   points.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:16:05 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 13:48:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:10:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,6 @@ double  ft_get_scale(t_map* map)
         scale_y = (WIN_HEIGHT / 2) / map->height;
         scale = fmin(scale_x, scale_y);
         return (scale);
-}
-
-void	free_last_file_content(int fd)
-{
-	char* line;
-	line = get_next_line(fd);
-	while (line != NULL) {
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
 }
 
 t_point**	ft_initialize_points(int fd, t_map* map)
@@ -62,9 +51,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 		if (!array)
 		{
 			perror("Error: Failed to split line\n");
-			ft_free_map(map, map->height);
-			close(fd);
-			exit(EXIT_FAILURE);
+			ft_exit_fd(fd, line, map);
 		}
 		if (!map->matrix[y])
 		{
@@ -86,7 +73,7 @@ t_point**	ft_initialize_points(int fd, t_map* map)
 	return (map->matrix);
 }
 
-void    ft_projection(t_map* map)
+void    ft_initialize_mlx(t_map* map)
 {		
 		t_mlx*	mlx;
 
@@ -98,20 +85,18 @@ void    ft_projection(t_map* map)
 		if (!mlx->ptr)
 		{
 			perror("Error: Failed to initialize mlx->ptr");
-			free(mlx);
-			exit(EXIT_FAILURE);
+			ft_exit_mlx(mlx);
 		}
 		mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT, "FdF"); //create a new window
 		if (!mlx->win_ptr)
 		{	
 			perror("Error: Failed to create a new window\n");
-			free(mlx);
-			exit(EXIT_FAILURE);
+			ft_exit_mlx(mlx);
 		}
 		generate_image(mlx, map);
 		mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->img, 0, 0);
 		t_hook* hook = ft_hooks(mlx, map);
 		mlx_loop(mlx->ptr);
-		ft_exit(mlx, map, hook);
+		ft_exit_final(mlx, map, hook);
 }
 

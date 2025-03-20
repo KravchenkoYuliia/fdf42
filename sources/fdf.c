@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:54:51 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 13:04:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:14:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "fdf.h"
 
 void	ft_fdf(char* filename)
@@ -43,5 +44,5 @@ void	ft_fdf(char* filename)
 		ft_free_map(map, map->height);
 		exit(EXIT_FAILURE);
 	}
-	ft_projection(map);
+	ft_initialize_mlx(map);
 }

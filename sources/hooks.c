@@ -3,34 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:00:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/11 14:53:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:04:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 
-int	ft_exit(t_mlx* mlx, t_map* map, t_hook* hook)
-{
-	if (mlx->ptr && mlx->img)
-		mlx_destroy_image(mlx->ptr, mlx->img);
-	if (mlx->ptr && mlx->win_ptr)
-	{	mlx_clear_window(mlx->ptr, mlx->win_ptr);
-		mlx_destroy_window(mlx->ptr, mlx->win_ptr);
-	}
-	if (mlx->ptr)
-	{
-		mlx_destroy_display(mlx->ptr);
-		free(mlx->ptr);
-	}
-	ft_free_map(map, map->height);
-	free(mlx);
-	free(hook);
-	return 0;
-}
+
 
 int	ft_key_press(int keycode, t_hook* param)
 {

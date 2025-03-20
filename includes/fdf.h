@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 13:46:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:17:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_hook {
 	t_map	*map;
 }	t_hook;
 
-int		ft_exit(t_mlx *mlx, t_map *map, t_hook *hook);
+int		ft_exit_final(t_mlx *mlx, t_map *map, t_hook *hook);
 int		check_if_fdf(char *filename);
 int		ft_count_line_numbers(char *str, char c);
 int		ft_key_press(int keycode, t_hook *param);
@@ -76,6 +76,7 @@ t_map   *ft_initialize_map(int fd, t_map *map);
 t_map	*ft_malloc_map(int rows, int columns, t_map *map);
 t_hook	*ft_hooks(t_mlx *mlx, t_map *map);
 t_point	**ft_initialize_points(int fd, t_map *map);
+void    ft_initialize_mlx(t_map* map);
 void	ft_fdf(char *filename);
 void	*ft_free_2d_array(char **array);
 void	ft_free_map(t_map *map, int allocated_rows);
@@ -83,7 +84,9 @@ void	ft_projection(t_map *map);
 void	ft_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	ft_start_drawing(t_map *map);
 void	ft_exit_fd(int fd, char *line, t_map *map);
+void	ft_exit_mlx(t_mlx *mlx);
 void	generate_image(t_mlx *mlx, t_map *map);
+void	free_last_file_content(int fd);
 double	ft_get_scale(t_map *map);
 
 #endif
