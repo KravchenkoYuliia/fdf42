@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:14:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/04 16:54:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:28:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int     check_if_fdf(char *filename)
+int	check_if_fdf(char *filename)
 {
 	int	i;
 
 	i = 0;
 	while (filename[i])
 		i++;
-	if (i > 4 && filename[i-1] == 'f' && filename[i-2] == 'd' && filename[i-3] == 'f' && filename[i-4] == '.')
+	if (i > 4 && filename[i - 1] == 'f' && filename[i - 2] == 'd'
+		&& filename[i - 3] == 'f' && filename[i - 4] == '.')
 		return (1);
 	return (0);
 }
 
-int     main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
@@ -40,4 +41,3 @@ int     main(int argc, char **argv)
 		ft_fdf(argv[1]);
 	return (0);
 }
-
