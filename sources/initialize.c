@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:50:53 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/22 16:18:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:34:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_map	*ft_initialize_map(int fd, t_map *map)
 	map->translate_y = 0;
 	map->zoom = 1;
     map->scale = ft_get_scale(map);
+    map->center_x = map->width / 2;
+	map->center_y = map->height / 2;
 	return (map);
 }
 

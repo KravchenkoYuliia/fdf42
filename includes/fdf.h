@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/22 12:46:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:33:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_map{
 	double	scale;
 	double	offset_x;
 	double	offset_y;
+	double	center_x;
+	double	center_y;
 	t_point	**matrix;
 }	t_map;
 
