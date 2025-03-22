@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:20:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 13:54:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 14:01:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,6 @@ t_map	*ft_malloc_map(int rows, int columns, t_map *map)
 	return (map);
 }
 
-t_map	*ft_initialize_map(int fd, t_map *map)
-{
-	t_fd	*text;
-
-	text = (t_fd *)malloc(sizeof(t_fd));
-	ft_check_if_rectangle(fd, text);
-	map = ft_malloc_map(text->rows, text->cc, map);
-	if (!map)
-	{
-		perror("Map is not allocated in ft_initialize_map\n");
-		exit(EXIT_FAILURE);
-	}
-	map->width = text->cc;
-	map->height = text->rows;
-	free(text);
-	map->translate_x = 0;
-	map->translate_y = 0;
-	map->zoom = 1;
-	return (map);
-}
 
 void	ft_check_if_rectangle(int fd, t_fd *text)
 {
