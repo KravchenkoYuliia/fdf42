@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/22 12:52:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 13:58:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,35 +95,7 @@ void	ft_get_points_to_draw_a_line(t_mlx *mlx, t_map *map)
 	}
 }
 
-void	ft_projection(t_map *map)
-{
-	int		i;
-	int		j;
-	double	map_center_x;
-	double	map_center_y;
 
-	map_center_x = map->width / 2;
-	map_center_y = map->height / 2;
-	map->offset_x = (WIN_WIDTH / 2) - map_center_x;
-	map->offset_y = (WIN_HEIGHT - map_center_y) / 2;
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-				map->matrix[i][j].x_proj = (((map->matrix[i][j].x * map->zoom) - 
-						(map->matrix[i][j].y * map->zoom)) * cos(0.523599));
-				map->matrix[i][j].x_proj += map->offset_x;
-				map->matrix[i][j].y_proj = (((map->matrix[i][j].x * map->zoom)
-							+ (map->matrix[i][j].y * map->zoom)) * sin(0.523599)
-						- map->matrix[i][j].z);
-				map->matrix[i][j].y_proj += map->offset_y;
-				j++;
-		}
-		i++;
-	}
-}
 
 void	ft_generate_image(t_mlx *mlx, t_map *map)
 {
