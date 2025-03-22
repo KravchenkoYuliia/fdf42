@@ -1,5 +1,6 @@
 NAME = fdf
 NAME_BONUS = fdf_bonus
+LIBS = libraries/minilibx-linux/libmlx.a libraries/libft_full_library/libft.a
 CC = cc
 
 all: $(NAME)
@@ -18,11 +19,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -I/opt/X11/include -I/opt -c $< -o $@
 
-$(NAME_BONUS): $(OBJ_BONUS)
-	$(CC) $(CFLAGS) $(OBJ_BONUS) libraries/minilibx-linux/libmlx.a libraries/libft_full_library/libft.a -lXext -lX11 -lm -lz -ldl -lglfw -pthread -lm -o $(NAME_BONUS)
+$(NAME_BONUS): $(OBJ_BONUS) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBS) -lXext -lX11 -lm -lz -ldl -lglfw -pthread -lm -o $(NAME_BONUS)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) libraries/minilibx-linux/libmlx.a libraries/libft_full_library/libft.a -lXext -lX11 -lm -lz -ldl -lglfw -pthread -lm -o $(NAME)
+$(NAME): $(OBJ) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -lXext -lX11 -lm -lz -ldl -lglfw -pthread -lm -o $(NAME)
+
+$(LIBS):
+	make -C libraries/minilibx-linux
+	make -C libraries/libft_full_library
 
 mac: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -I/opt/X11/include -I/opt -L/opt/X11/lib -o $(NAME) -lX11
@@ -34,6 +39,5 @@ clean:
 
 fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
-
 re: fclean all
 
