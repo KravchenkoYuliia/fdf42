@@ -6,28 +6,29 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:02:27 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/22 13:58:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:46:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void    ft_pixel_put(t_mlx* mlx, int x, int y, int color)
+void	ft_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
-	char*	dest;
+	char	*dest;
 
-	if (x < 0 || y < 0 || x>= WIN_WIDTH || y >= WIN_HEIGHT) //window size
+	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
 		return ;
 	if (!mlx->bits_buff)
 	{
 		perror("Error: mlx->bits_buff is NULL\n");
 		return ;
 	}
-	dest = mlx->bits_buff + (y * mlx->size_line + x * (mlx->bits_per_pixel / 8)); //count pixel's position
-	*(unsigned int *)dest = color; // 32 bites = 4 bytes
+	dest = mlx->bits_buff + (y * mlx->size_line + x
+			* (mlx->bits_per_pixel / 8));
+	*(unsigned int *)dest = color;
 }
 
-void	ft_draw_lines_x(t_mlx* mlx, t_map* map, int i, int j)
+void	ft_draw_lines_x(t_mlx *mlx, t_map *map, int i, int j)
 {
 	double	pixels;
 	double	d_x;
@@ -36,7 +37,7 @@ void	ft_draw_lines_x(t_mlx* mlx, t_map* map, int i, int j)
 	double	start_y;
 
 	d_x = map->matrix[i][j + 1].x_proj - map->matrix[i][j].x_proj;
-	d_y = map->matrix[i][j + 1].y_proj- map->matrix[i][j].y_proj;
+	d_y = map->matrix[i][j + 1].y_proj - map->matrix[i][j].y_proj;
 	pixels = sqrt((d_x * d_x) + (d_y * d_y));
 	d_x /= pixels;
 	d_y /= pixels;
@@ -51,7 +52,7 @@ void	ft_draw_lines_x(t_mlx* mlx, t_map* map, int i, int j)
 	}
 }
 
-void	ft_draw_lines_y(t_mlx* mlx, t_map* map, int i, int j)
+void	ft_draw_lines_y(t_mlx *mlx, t_map *map, int i, int j)
 {
 	double	pixels;
 	double	d_x;
@@ -60,7 +61,7 @@ void	ft_draw_lines_y(t_mlx* mlx, t_map* map, int i, int j)
 	double	start_y;
 
 	d_x = map->matrix[i + 1][j].x_proj - map->matrix[i][j].x_proj;
-	d_y = map->matrix[i + 1][j].y_proj- map->matrix[i][j].y_proj;
+	d_y = map->matrix[i + 1][j].y_proj - map->matrix[i][j].y_proj;
 	pixels = sqrt((d_x * d_x) + (d_y * d_y));
 	d_x /= pixels;
 	d_y /= pixels;
@@ -74,6 +75,7 @@ void	ft_draw_lines_y(t_mlx* mlx, t_map* map, int i, int j)
 		pixels--;
 	}
 }
+
 void	ft_get_points_to_draw_a_line(t_mlx *mlx, t_map *map)
 {
 	int	j;
@@ -87,15 +89,13 @@ void	ft_get_points_to_draw_a_line(t_mlx *mlx, t_map *map)
 		{
 			if (j < map->width - 1)
 				ft_draw_lines_x(mlx, map, i, j);
-			if (i < map->height-1)
+			if (i < map->height - 1)
 				ft_draw_lines_y(mlx, map, i, j);
 			j++;
 		}
 		i++;
 	}
 }
-
-
 
 void	ft_generate_image(t_mlx *mlx, t_map *map)
 {
