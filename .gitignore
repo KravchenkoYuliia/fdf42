@@ -8,3 +8,4 @@ libraries/minilibx-linux/libmlx.a
 libraries/minilibx-linux/libmlx_Linux.a
 libraries/minilibx-linux/test/mlx-test
 .vscode/
+delete.c
