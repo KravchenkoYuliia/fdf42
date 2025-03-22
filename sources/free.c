@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 13:39:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 14:01:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:51:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ void	*ft_free_2d_array(char **array)
 	free(array);
 	return (NULL);
 }
+
 void	free_last_file_content(int fd)
 {
-	char* line;
+	char	*line;
+
 	line = get_next_line(fd);
-	while (line != NULL) {
+	while (line != NULL)
+	{
 		free(line);
 		line = get_next_line(fd);
 	}
