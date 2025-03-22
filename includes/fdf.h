@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:23:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/03/20 16:42:33 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/03/22 12:46:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdlib.h>
 # include <float.h>
 
-# define WIN_WIDTH 1820
-# define WIN_HEIGHT 880
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 typedef struct s_fd{
         int flc;
